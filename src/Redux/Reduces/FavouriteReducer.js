@@ -4,7 +4,7 @@ const initialState = {
   content: [],
 }
 
-export default function favouriteReducer(state = initialState, action) {
+const favouriteReducer = (state = initialState, action) => {
   switch (action.type) {
     case LIKE_TRACK:
       return {
@@ -14,9 +14,10 @@ export default function favouriteReducer(state = initialState, action) {
     case UNLIKE_TRACK:
       return {
         ...state,
-        content: state.content.filter((track) => track !== action.payload),
+        content: state.content.filter((track) => track.id !== action.payload),
       }
     default:
       return state
   }
 }
+export default favouriteReducer

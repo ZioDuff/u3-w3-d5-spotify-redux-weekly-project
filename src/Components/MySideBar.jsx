@@ -1,14 +1,29 @@
 import {
   Button,
   Container,
+  Form,
   FormControl,
   InputGroup,
   Nav,
   Navbar,
 } from "react-bootstrap"
 import SpotifyLogo from "../assets/logo.png"
+import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { searchSongsAction } from "../Redux/Actions"
 
 const MySideBar = () => {
+  const dispatch = useDispatch()
+  const [query, setQuery] = useState("")
+  const handleChange = (e) => {
+    setQuery(e.target.value)
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    dispatch(searchSongsAction(query))
+  }
+
   return (
     <Nav
       className="navbar navbar-expand-md fixed-left justify-content-between"
@@ -50,19 +65,23 @@ const MySideBar = () => {
               </li>
               <li>
                 <InputGroup className=" mt-3">
-                  <FormControl
-                    type="text"
-                    placeholder="Search"
-                    aria-label="Search"
-                  />
-                  <div className="input-group-append">
-                    <Button
-                      variant="black"
-                      className="btn btn-outline-success btn-sm h-100"
-                    >
-                      GO
-                    </Button>
-                  </div>
+                  <Form onSubmit={handleSubmit}>
+                    <FormControl
+                      type="search"
+                      placeholder="Search"
+                      aria-label="Search"
+                      value={query}
+                      onChange={handleChange}
+                    />
+                    <div className="input-group-append">
+                      <Button
+                        variant="black"
+                        className="btn btn-outline-success btn-sm h-100"
+                      >
+                        GO
+                      </Button>
+                    </div>
+                  </Form>
                 </InputGroup>
               </li>
             </ul>

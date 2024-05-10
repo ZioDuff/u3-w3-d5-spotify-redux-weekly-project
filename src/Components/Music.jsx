@@ -1,16 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react"
-import { Button, Col, Row } from "react-bootstrap"
+import { Col, Row } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import { likeTrackAction, selectSongAction } from "../Redux/Actions"
+import {
+  likeTrackAction,
+  selectSongAction,
+  unlikeTrackAction,
+} from "../Redux/Actions"
 
 const Music = (props) => {
   const [artistName, setArtistName] = useState([])
   const dispatch = useDispatch()
   // const [likedTracks, setLikedTracks] = useState({})
-  const likedTrack = useSelector((state) => state.likedTrack)
-  console.log(likedTrack)
+  const likedTracks = useSelector((state) => state.favouriteReducer.content)
   const fillMusicSection = async () => {
     try {
       let response = await fetch(
@@ -27,17 +30,6 @@ const Music = (props) => {
       console.log("error", err)
     }
   }
-
-  // const handleLike = (e, trackId) => {
-  //   e.stopPropagation()
-  //   const updatedLikedTracks = { ...likedTracks }
-  //   if (likedTracks[trackId]) {
-  //     delete updatedLikedTracks[trackId]
-  //   } else {
-  //     updatedLikedTracks[trackId] = true
-  //   }
-  //   setLikedTracks(updatedLikedTracks)
-  // }
 
   useEffect(() => {
     fillMusicSection()
@@ -65,17 +57,17 @@ const Music = (props) => {
                 <br />
                 Artist:{track.artist.name}
               </p>
-              <Button
-                variant="outline-light"
-                className="border-0 p-0 px-2 rounded-5 mb-1"
-                onClick={() => dispatch(likeTrackAction(track))}
-              >
-                {track.id ? (
-                  <i className="bi bi-heart"></i>
-                ) : (
-                  <i className="bi bi-heart-fill"></i>
-                )}
-              </Button>
+              {likedTracks && likedTracks.includes(track) ? (
+                <i
+                  onClick={() => dispatch(unlikeTrackAction(track.id))}
+                  className="bi bi-heart-fill"
+                ></i>
+              ) : (
+                <i
+                  onClick={() => dispatch(likeTrackAction(track))}
+                  className="bi bi-heart"
+                ></i>
+              )}
             </Col>
           )
         })}

@@ -7,6 +7,7 @@ import MyNav from "./Components/MyNav"
 import Music from "./Components/Music"
 import Player from "./Components/Player"
 import MyFooterSong from "./Components/MyFooterSong"
+import SearchMusic from "./Components/SearchMusic"
 
 function App() {
   return (
@@ -23,6 +24,13 @@ function App() {
             <Row>
               <Col className="text-light" xs={10}>
                 <div>
+                  <SearchMusic />
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col className="text-light" xs={10}>
+                <div>
                   <h2 className="text-light">Rock Classic</h2>
                   <Music artistName="katy perry" />
                 </div>
@@ -32,7 +40,7 @@ function App() {
               <Col className="text-light" xs={10}>
                 <div className="text-light">
                   <h2>Pop</h2>
-                  <Music artistName="eminem" />
+                  <Music artistName="noyz narcos" />
                 </div>
               </Col>
             </Row>
